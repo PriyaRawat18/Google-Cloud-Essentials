@@ -1,0 +1,88 @@
+Activate Cloud Shell
+-->  gcloud auth list
+-->  gcloud config list project
+
+Task 1: Configure your environment
+
+Set the region to us-central1
+gcloud config set compute/region us-central1
+Copied!
+To view the project region setting, run the following command:
+gcloud config get-value compute/region
+Copied!
+Set the zone to us-central1-b
+gcloud config set compute/zone us-central1-b
+Copied!
+To view the project zone setting, run the following command:
+gcloud config get-value compute/zone
+Copied!
+Finding project information
+Copy your project ID to your clipboard or text editor. The project ID is listed in 2 places:
+
+In the Google Cloud Console, on the Dashboard, under Project info. (Click Navigation menu (Navigation menu), and then click Home > Dashboard.)
+
+On the Qwiklabs tab near your username and password.
+
+In Cloud Shell, run the following gcloud command, to view the project id for your project:
+gcloud config get project
+Copied!
+In Cloud Shell, run the following gcloud command to view details about the project:
+
+gcloud compute project-info describe --project $(gcloud config get project) 
+Copied!
+Find the zone and region metadata values in the output. You'll use the zone (google-compute-default-zone) from the output later in this lab.
+
+
+Setting environment variables
+Environment variables define your environment and help save time when you write scripts that contain APIs or executables.
+
+Create an environment variable to store your Project ID, replacing <your_project_ID> with the value for name from the gcloud compute project-info describe command you ran earlier:
+
+export PROJECT_ID=$(gcloud config get project)
+Copied!
+Create an environment variable to store your Zone, replacing <your_zone> with the value for zone from the gcloud compute project-info describe command you ran earlier:
+
+export ZONE=$(gcloud config get-value compute/zone)
+Copied!
+To verify that your variables were set properly, run the following commands:
+
+echo -e "PROJECT ID: $PROJECT_ID\nZONE: $ZONE"
+Copied!
+If the variables were set correctly, the echo commands will output your Project ID and Zone.
+
+Creating a virtual machine with the gcloud tool
+Use the gcloud tool to create a new virtual machine (VM) instance.
+
+To create your VM, run the following command:
+
+gcloud compute instances create gcelab2 --machine-type n1-standard-2 --zone $ZONE
+Copied!
+Output:
+
+Created [https://www.googleapis.com/compute/v1/projects/qwiklabs-gcp-04-326fae68bc3d/zones/us-central1-b/instances/gcelab2].
+NAME     ZONE           MACHINE_TYPE   PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP   STATUS
+gcelab2  us-central1-b  n1-standard-2               10.128.0.2   34.67.152.90  RUNNING
+Command details
+
+gcloud compute allows you to manage your Compute Engine resources in a format that's simpler than the Compute Engine API.
+
+instances create creates a new instance.
+
+gcelab2 is the name of the VM.
+
+The --machine-type flag specifies the machine type as n1-standard-2.
+
+The --zone flag specifies where the VM is created.
+
+If you omit the --zone flag, the gcloud tool can infer your desired zone based on your default properties. Other required instance settings, such as machine type and image, are set to default values if not specified in the create command.
+
+Test completed task
+
+============================================================================================================================================================================
+
+
+Task 2: Filtering command line output
+Task 3: Connecting to your VM instance
+Task 4: Updating the Firewall
+Task 5: Viewing the system logs
+Test your understanding
